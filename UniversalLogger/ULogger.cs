@@ -11,6 +11,12 @@ namespace UniversalLogger
         }
 
         public string LogFilePath { get; set; }
+        public string LocalFilePath
+        {
+            set {
+                LogFilePath = Directory.GetCurrentDirectory() + "//" + value;
+            }
+        }
 
         private void SetStandartPath()
         {
@@ -27,17 +33,17 @@ namespace UniversalLogger
                     file.WriteLine("[{0} | {1} [{2}]] {3}", now.ToShortDateString(), now.ToLongTimeString(), category, log);
                 }
             }
-            catch
+            catch (Exception exception)
             {
-                RepairLogger();
+                RepairLogger(exception);
                 WriteToFile(log, category);
             }
         }
 
-        private void RepairLogger()
+        private void RepairLogger(Exception exception)
         {
             SetStandartPath();
-            Error("The path for logger was incorrect!");
+            Error("The path for logger was incorrect! " + exception.ToString());
         }
 
         public void Log(string log)
