@@ -14,7 +14,9 @@ namespace UniversalLogger
         public string LocalFilePath
         {
             set {
-                LogFilePath = Directory.GetCurrentDirectory() + "//" + value;
+                LogFilePath = Directory.GetCurrentDirectory() + "\\" + value;
+                var t = LogFilePath.Substring(0, LogFilePath.LastIndexOf('\\'));
+                Directory.CreateDirectory(LogFilePath.Substring(0, LogFilePath.LastIndexOf('\\')));
             }
         }
 
